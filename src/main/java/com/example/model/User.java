@@ -24,11 +24,11 @@ public class User {
         this.password = password;
     }
 
-    public int getidUser() {
+    public int getIdUser() {
         return idUser;
     }
 
-    public void setidUser(int idUser) {
+    public void setIdUser(int idUser) {
         this.idUser = idUser;
     }
 
