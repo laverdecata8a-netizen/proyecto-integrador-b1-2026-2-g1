@@ -113,27 +113,30 @@ public class MainView extends VerticalLayout {
         FormLayout form = new FormLayout(idField,nombreField,apellidoField,emailField,celularField,passwordField);
 
         Button btnCrear = new Button("Crear", e -> 
-            Notification.show("Entidad 2 - Crear: " + tituloField.getValue())
+            Notification.show("User - Crear: " + nombreField .getValue())
         );
         btnCrear.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 
         Button btnConsultar = new Button("Consultar", e -> 
-            Notification.show("Entidad 2 - Consultar Código: " + idField.getValue())
+            Notification.show("User - Consultar Código: " + idField.getValue())
         );
 
         Button btnActualizar = new Button("Actualizar", e -> 
-            Notification.show("Entidad 2 - Actualizar Código: " + idField.getValue())
+            Notification.show("User - Actualizar Código: " + idField.getValue())
         );
 
         Button btnEliminar = new Button("Eliminar", e -> 
-            Notification.show("Entidad 2 - Eliminar Código: " + idField.getValue())
+            Notification.show("User - Eliminar Código: " + idField.getValue())
         );
         btnEliminar.addThemeVariants(ButtonVariant.LUMO_ERROR);
 
         Button btnLimpiar = new Button("Limpiar", e -> {
-            idField.clear();
-            tituloField.clear();
-            categoriaField.clear();
+        idField.clear();
+        nombreField.clear();
+        apellidoField.clear();
+        emailField.clear();
+        celularField.clear();
+        passwordField.clear();
         });
 
         HorizontalLayout acciones = new HorizontalLayout(
@@ -142,9 +145,11 @@ public class MainView extends VerticalLayout {
         acciones.getStyle().set("flex-wrap", "wrap");
 
         Grid<String[]> grid = new Grid<>();
-        grid.addColumn(row -> row[0]).setHeader("Código / ID").setAutoWidth(true);
-        grid.addColumn(row -> row[1]).setHeader("Título").setAutoWidth(true);
-        grid.addColumn(row -> row[2]).setHeader("Categoría").setAutoWidth(true);
+        grid.addColumn(row -> row[0]).setHeader("ID").setAutoWidth(true);
+        grid.addColumn(row -> row[1]).setHeader("Nombre").setAutoWidth(true);
+        grid.addColumn(row -> row[2]).setHeader("Apellido").setAutoWidth(true);
+        grid.addColumn(row -> row[3]).setHeader("Email").setAutoWidth(true);
+        grid.addColumn(row -> row[4]).setHeader("Celular").setAutoWidth(true);
 
         layout.add(form, acciones, grid);
         return layout;
