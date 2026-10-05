@@ -10,6 +10,7 @@ import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.TabSheet;
+import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
@@ -23,27 +24,28 @@ public class MainView extends VerticalLayout {
         setPadding(true);
         setSpacing(true);
 
-        H2 titulo = new H2("Gestión de Entidades (CRUD)");
+        H2 titulo = new H2("GatoGo");
 
         TabSheet tabSheet = new TabSheet();
         tabSheet.setWidthFull();
 
-        tabSheet.add("Entidad 1", crearSeccionEntidad1());
-        tabSheet.add("Entidad 2", crearSeccionEntidad2());
+        tabSheet.add("Gatos", crearSeccionGato());
+        tabSheet.add("User", crearSeccionUser());
 
         add(titulo, tabSheet);
     }
 
     // Método privado para gestionar la primera entidad
-    private Component crearSeccionEntidad1() {
+    private Component crearSeccionGato() {
         VerticalLayout layout = new VerticalLayout();
         layout.setPadding(false);
 
-        TextField idField = new TextField("ID");
-        TextField nombreField = new TextField("Nombre");
-        TextField descripcionField = new TextField("Descripción");
+        TextField idField = new TextField("Nombre");
+        TextField nombreField = new TextField("Color");
+        TextField fechaIngresoField = new TextField("Fecha de ingreso");
+        TextArea descripcionField = new TextArea("Descripción");
 
-        FormLayout form = new FormLayout(idField, nombreField, descripcionField);
+        FormLayout form = new FormLayout(idField, nombreField,fechaIngresoField,descripcionField );
 
         Button btnCrear = new Button("Crear", e -> 
             Notification.show("Entidad 1 - Crear: " + nombreField.getValue())
@@ -84,7 +86,7 @@ public class MainView extends VerticalLayout {
     }
 
     // Método privado para gestionar la segunda entidad
-    private Component crearSeccionEntidad2() {
+    private Component crearSeccionUser() {
         VerticalLayout layout = new VerticalLayout();
         layout.setPadding(false);
 
