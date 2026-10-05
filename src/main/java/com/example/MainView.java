@@ -11,6 +11,8 @@ import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.TabSheet;
+import com.vaadin.flow.component.textfield.EmailField;
+import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
@@ -99,11 +101,16 @@ public class MainView extends VerticalLayout {
         VerticalLayout layout = new VerticalLayout();
         layout.setPadding(false);
 
-        TextField idField = new TextField("Código / ID");
-        TextField tituloField = new TextField("Título");
-        TextField categoriaField = new TextField("Categoría");
+        TextField idField = new TextField("ID");
+        idField.setReadOnly(true);
 
-        FormLayout form = new FormLayout(idField, tituloField, categoriaField);
+        TextField nombreField = new TextField("Nombre");
+        TextField apellidoField = new TextField("Apellido");
+        EmailField emailField = new EmailField("Email");
+        TextField celularField = new TextField("Celular");
+        PasswordField passwordField = new PasswordField("Contraseña");
+
+        FormLayout form = new FormLayout(idField,nombreField,apellidoField,emailField,celularField,passwordField);
 
         Button btnCrear = new Button("Crear", e -> 
             Notification.show("Entidad 2 - Crear: " + tituloField.getValue())
