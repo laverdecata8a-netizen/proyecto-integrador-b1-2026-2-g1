@@ -69,4 +69,12 @@ public class Gato {
         this.descripcion = descripcion;
     }
 
+    @Override
+    public String toString() {
+        return "Gato [idGato=" + idGato + ", nombre=" + nombre + ", color=" + color + ", fechaIngreso=" + fechaIngreso
+                + ", descripcion=" + descripcion + "]";
+    }
+
+    
+
 }
