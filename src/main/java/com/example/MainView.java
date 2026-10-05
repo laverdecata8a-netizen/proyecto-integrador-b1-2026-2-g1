@@ -3,6 +3,7 @@ package com.example;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
+import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H2;
@@ -40,34 +41,39 @@ public class MainView extends VerticalLayout {
         VerticalLayout layout = new VerticalLayout();
         layout.setPadding(false);
 
-        TextField idField = new TextField("Nombre");
-        TextField nombreField = new TextField("Color");
-        TextField fechaIngresoField = new TextField("Fecha de ingreso");
+        TextField idField = new TextField("ID");
+        idField.setReadOnly(true);
+
+        TextField nombreField = new TextField("Nombre");
+        TextField colorField = new TextField("Color");
+        DatePicker fechaIngresoField = new DatePicker("Fecha de ingreso");
         TextArea descripcionField = new TextArea("Descripción");
 
-        FormLayout form = new FormLayout(idField, nombreField,fechaIngresoField,descripcionField );
+        FormLayout form = new FormLayout(idField,nombreField,colorField,fechaIngresoField,descripcionField );
 
         Button btnCrear = new Button("Crear", e -> 
-            Notification.show("Entidad 1 - Crear: " + nombreField.getValue())
+            Notification.show("Gato - Crear: " + nombreField.getValue())
         );
         btnCrear.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 
         Button btnConsultar = new Button("Consultar", e -> 
-            Notification.show("Entidad 1 - Consultar ID: " + idField.getValue())
+            Notification.show("Gato - Consultar ID: " + idField.getValue())
         );
 
         Button btnActualizar = new Button("Actualizar", e -> 
-            Notification.show("Entidad 1 - Actualizar ID: " + idField.getValue())
+            Notification.show("Gato - Actualizar ID: " + idField.getValue())
         );
 
         Button btnEliminar = new Button("Eliminar", e -> 
-            Notification.show("Entidad 1 - Eliminar ID: " + idField.getValue())
+            Notification.show("Gato - Eliminar ID: " + idField.getValue())
         );
         btnEliminar.addThemeVariants(ButtonVariant.LUMO_ERROR);
 
         Button btnLimpiar = new Button("Limpiar", e -> {
             idField.clear();
             nombreField.clear();
+            colorField.clear();
+            fechaIngresoField.clear();
             descripcionField.clear();
         });
 
