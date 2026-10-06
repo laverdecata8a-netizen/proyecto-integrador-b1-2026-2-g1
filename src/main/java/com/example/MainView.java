@@ -97,6 +97,7 @@ public class MainView extends VerticalLayout {
     }
 
 // Método privado para gestionar la ubicacion
+// Deberia modificarse el modelo entidad relacion
     private Component crearSeccionUbicacion() {
         VerticalLayout layout = new VerticalLayout();
         layout.setPadding(false);
