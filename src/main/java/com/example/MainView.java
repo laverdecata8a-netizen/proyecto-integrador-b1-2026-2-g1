@@ -34,6 +34,7 @@ public class MainView extends VerticalLayout {
 
         tabSheet.add("Gatos", crearSeccionGato());
         tabSheet.add("User", crearSeccionUser());
+        tabSheet.add("Ubicacion", crearSeccionUbicacion());
 
         add(titulo, tabSheet);
     }
@@ -95,6 +96,62 @@ public class MainView extends VerticalLayout {
         layout.add(form, acciones, grid);
         return layout;
     }
+
+// Método privado para gestionar la ubicacion
+    private Component crearSeccionUbicacion() {
+        VerticalLayout layout = new VerticalLayout();
+        layout.setPadding(false);
+
+        TextField idUbicacionField = new TextField("ID Ubicacion");
+        idUbicacionField.setReadOnly(true);
+
+        TextField direccionField = new TextField("Direccion");
+        TextField barrioField = new TextField("Barrio");
+        TextField ciudadField = new TextField("Ciudad");
+
+        FormLayout form = new FormLayout(idUbicacionField,direccionField ,barrioField,ciudadField );
+
+        Button btnCrear = new Button("Crear", e -> 
+            Notification.show("Ubicacion - Crear: " + direccionField.getValue())
+        );
+        btnCrear.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+
+        Button btnConsultar = new Button("Consultar", e -> 
+            Notification.show("Ubicacion - Consultar ID: " + idUbicacionField.getValue())
+        );
+
+        Button btnActualizar = new Button("Actualizar", e -> 
+            Notification.show("Ubicacion - Actualizar ID: " + idUbicacionField.getValue())
+        );
+
+        Button btnEliminar = new Button("Eliminar", e -> 
+            Notification.show("Ubicacion - Eliminar ID: " + idUbicacionField.getValue())
+        );
+        btnEliminar.addThemeVariants(ButtonVariant.LUMO_ERROR);
+
+        Button btnLimpiar = new Button("Limpiar", e -> {
+            idUbicacionField.clear();
+            direccionField.clear();
+            barrioField.clear();
+            ciudadField.clear();
+        });
+
+        HorizontalLayout acciones = new HorizontalLayout(
+            btnCrear, btnConsultar, btnActualizar, btnEliminar, btnLimpiar
+        );
+        acciones.getStyle().set("flex-wrap", "wrap");
+
+        Grid<String[]> grid = new Grid<>();
+
+        grid.addColumn(row -> row[0]).setHeader("ID").setAutoWidth(true);
+        grid.addColumn(row -> row[1]).setHeader("Direccion").setAutoWidth(true);
+        grid.addColumn(row -> row[2]).setHeader("Barrio").setAutoWidth(true);
+        grid.addColumn(row -> row[3]).setHeader("Ciudad").setAutoWidth(true);
+
+        layout.add(form, acciones, grid);
+        return layout;
+    }
+
 
     // Método privado para gestionar la segunda entidad
     private Component crearSeccionUser() {
