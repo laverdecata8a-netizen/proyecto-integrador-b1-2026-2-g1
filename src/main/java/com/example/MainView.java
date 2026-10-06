@@ -18,7 +18,7 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
-@PageTitle("Gestión CRUD - 2 Entidades")
+@PageTitle("GatoGo")
 @Route("")
 public class MainView extends VerticalLayout {
 
