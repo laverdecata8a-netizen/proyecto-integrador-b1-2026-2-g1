@@ -34,7 +34,7 @@ public class MainView extends VerticalLayout {
 
         tabSheet.add("Gatos", crearSeccionGato());
         tabSheet.add("Ubicacion", crearSeccionUser());
-        tabSheet.add("User", crearSeccionUser());
+        tabSheet.add("Usaer", crearSeccionUbicacion());
         add(titulo, tabSheet);
     }
 
