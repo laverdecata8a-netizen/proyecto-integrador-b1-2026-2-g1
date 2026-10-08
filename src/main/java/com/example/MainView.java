@@ -1,5 +1,10 @@
 package com.example;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import com.example.model.Avistamiento;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -12,6 +17,7 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.TabSheet;
 import com.vaadin.flow.component.textfield.EmailField;
+import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
@@ -35,7 +41,148 @@ public class MainView extends VerticalLayout {
         tabSheet.add("Gatos", crearSeccionGato());
         tabSheet.add("Ubicacion", crearSeccionUbicacion());
         tabSheet.add("User", crearSeccionUser());
+        tabSheet.add("Avistamientos", crearSeccionAvistamiento());
         add(titulo, tabSheet);
+    }
+
+    private Component crearSeccionAvistamiento() {
+        VerticalLayout layout = new VerticalLayout();
+        layout.setPadding(false);
+
+        List<Avistamiento> avistamientos = new ArrayList<>();
+        int[] siguienteId = { 1 };
+
+        TextField idField = new TextField("ID avistamiento");
+        idField.setReadOnly(true);
+        IntegerField idGatoField = new IntegerField("ID gato");
+        IntegerField idUserField = new IntegerField("ID user");
+        IntegerField idFotoField = new IntegerField("ID foto");
+        DatePicker fechaField = new DatePicker("Fecha");
+
+        idGatoField.setMin(1);
+        idUserField.setMin(1);
+        idFotoField.setMin(1);
+        idGatoField.setRequiredIndicatorVisible(true);
+        idUserField.setRequiredIndicatorVisible(true);
+        idFotoField.setRequiredIndicatorVisible(true);
+        fechaField.setRequiredIndicatorVisible(true);
+
+        FormLayout form = new FormLayout(idField, idGatoField, idUserField, idFotoField, fechaField);
+        Grid<Avistamiento> grid = new Grid<>(Avistamiento.class, false);
+        grid.addColumn(Avistamiento::getIdAvistamiento).setHeader("ID avistamiento").setAutoWidth(true);
+        grid.addColumn(Avistamiento::getIdGato).setHeader("ID gato").setAutoWidth(true);
+        grid.addColumn(Avistamiento::getIdUser).setHeader("ID user").setAutoWidth(true);
+        grid.addColumn(Avistamiento::getIdFoto).setHeader("ID foto").setAutoWidth(true);
+        grid.addColumn(Avistamiento::getFecha).setHeader("Fecha y hora").setAutoWidth(true);
+        grid.setItems(avistamientos);
+        grid.addItemClickListener(event -> mostrarAvistamiento(event.getItem(), idField,
+                idGatoField, idUserField, idFotoField, fechaField));
+
+        Button btnCrear = new Button("Crear", e -> {
+            if (!formularioValido(idGatoField, idUserField, idFotoField, fechaField)) {
+                Notification.show("Completa todos los campos con valores válidos.");
+                return;
+            }
+
+            Avistamiento avistamiento = new Avistamiento(idGatoField.getValue(), idUserField.getValue(),
+                    idFotoField.getValue(), fechaField.getValue());
+            avistamiento.setIdAvistamiento(siguienteId[0]++);
+            avistamientos.add(avistamiento);
+            grid.getDataProvider().refreshAll();
+            Notification.show("Avistamiento creado. El ID es temporal hasta conectar la base de datos.");
+            limpiarAvistamiento(idField, idGatoField, idUserField, idFotoField, fechaField);
+        });
+        btnCrear.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+
+        Button btnConsultar = new Button("Consultar", e -> {
+            Optional<Avistamiento> encontrado = buscarAvistamiento(idField, avistamientos);
+            if (encontrado.isPresent()) {
+                mostrarAvistamiento(encontrado.get(), idField, idGatoField, idUserField, idFotoField, fechaField);
+            } else {
+                Notification.show("No existe un avistamiento con ese ID.");
+            }
+        });
+
+        Button btnActualizar = new Button("Actualizar", e -> {
+            Optional<Avistamiento> encontrado = buscarAvistamiento(idField, avistamientos);
+            if (encontrado.isEmpty()) {
+                Notification.show("Selecciona o consulta un avistamiento existente.");
+                return;
+            }
+            if (!formularioValido(idGatoField, idUserField, idFotoField, fechaField)) {
+                Notification.show("Completa todos los campos con valores válidos.");
+                return;
+            }
+
+            Avistamiento avistamiento = encontrado.get();
+            avistamiento.setIdGato(idGatoField.getValue());
+            avistamiento.setIdUser(idUserField.getValue());
+            avistamiento.setIdFoto(idFotoField.getValue());
+            avistamiento.setFecha(fechaField.getValue());
+            grid.getDataProvider().refreshAll();
+            Notification.show("Avistamiento actualizado.");
+            limpiarAvistamiento(idField, idGatoField, idUserField, idFotoField, fechaField);
+        });
+
+        Button btnEliminar = new Button("Eliminar", e -> {
+            Optional<Avistamiento> encontrado = buscarAvistamiento(idField, avistamientos);
+            if (encontrado.isPresent()) {
+                avistamientos.remove(encontrado.get());
+                grid.getDataProvider().refreshAll();
+                Notification.show("Avistamiento eliminado.");
+                limpiarAvistamiento(idField, idGatoField, idUserField, idFotoField, fechaField);
+            } else {
+                Notification.show("No existe un avistamiento con ese ID.");
+            }
+        });
+        btnEliminar.addThemeVariants(ButtonVariant.LUMO_ERROR);
+
+        Button btnLimpiar = new Button("Limpiar",
+                e -> limpiarAvistamiento(idField, idGatoField, idUserField, idFotoField, fechaField));
+
+        HorizontalLayout acciones = new HorizontalLayout(btnCrear, btnConsultar, btnActualizar, btnEliminar,
+                btnLimpiar);
+        acciones.getStyle().set("flex-wrap", "wrap");
+
+        layout.add(form, acciones, grid);
+        return layout;
+    }
+
+    private boolean formularioValido(IntegerField idGatoField, IntegerField idUserField,
+            IntegerField idFotoField, DatePicker fechaField) {
+        return idGatoField.getValue() != null && idGatoField.getValue() > 0
+                && idUserField.getValue() != null && idUserField.getValue() > 0
+                && idFotoField.getValue() != null && idFotoField.getValue() > 0
+                && fechaField.getValue() != null;
+    }
+
+    private Optional<Avistamiento> buscarAvistamiento(TextField idField, List<Avistamiento> avistamientos) {
+        try {
+            int id = Integer.parseInt(idField.getValue());
+            return avistamientos.stream()
+                    .filter(avistamiento -> avistamiento.getIdAvistamiento() == id)
+                    .findFirst();
+        } catch (NumberFormatException exception) {
+            return Optional.empty();
+        }
+    }
+
+    private void mostrarAvistamiento(Avistamiento avistamiento, TextField idField, IntegerField idGatoField,
+            IntegerField idUserField, IntegerField idFotoField, DatePicker fechaField) {
+        idField.setValue(String.valueOf(avistamiento.getIdAvistamiento()));
+        idGatoField.setValue(avistamiento.getIdGato());
+        idUserField.setValue(avistamiento.getIdUser());
+        idFotoField.setValue(avistamiento.getIdFoto());
+        fechaField.setValue(avistamiento.getFecha());
+    }
+
+    private void limpiarAvistamiento(TextField idField, IntegerField idGatoField, IntegerField idUserField,
+            IntegerField idFotoField, DatePicker fechaField) {
+        idField.clear();
+        idGatoField.clear();
+        idUserField.clear();
+        idFotoField.clear();
+        fechaField.clear();
     }
 
     // Método privado para gestionar la primera entidad
