@@ -89,7 +89,7 @@ public class MainView extends VerticalLayout {
             avistamiento.setIdAvistamiento(siguienteId[0]++);
             avistamientos.add(avistamiento);
             grid.getDataProvider().refreshAll();
-            Notification.show("Avistamiento creado. El ID es temporal hasta conectar la base de datos.");
+            Notification.show("Avistamiento creado.");
             limpiarAvistamiento(idField, idGatoField, idUserField, idFotoField, fechaField);
         });
         btnCrear.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
