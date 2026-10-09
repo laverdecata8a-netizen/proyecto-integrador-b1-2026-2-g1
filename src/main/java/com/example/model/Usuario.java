@@ -3,14 +3,14 @@ package com.example.model;
 import java.time.LocalDateTime;
 
 public class Usuario {
-    private Long id; // para que sea autogenerado por la BD
+    private Long id; 
     private String nombre;
     private String apellido;
     private String email;
     private String telefono;
     private String direccion;
-    private String rol; // 'admin', 'usuario', etc.
-    private String estado; // 'activo', 'inactivo', 'baneado'
+    private String rol; 
+    private String estado; 
     private LocalDateTime fechaRegistro;
 
     // ===================
