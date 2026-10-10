@@ -57,12 +57,15 @@ public class MainView extends VerticalLayout {
         int[] siguienteId = { 1 };
 
         TextField idField = new TextField("ID avistamiento");
-        idField.setReadOnly(true);
         IntegerField idGatoField = new IntegerField("ID gato");
         IntegerField idUserField = new IntegerField("ID user");
         IntegerField idFotoField = new IntegerField("ID foto");
         DatePicker fechaField = new DatePicker("Fecha");
 
+        idGatoField.setReadOnly(true);
+        idUserField.setReadOnly(true);
+        idFotoField.setReadOnly(true);
+        fechaField.setReadOnly(true);
         idGatoField.setMin(1);
         idUserField.setMin(1);
         idFotoField.setMin(1);
@@ -82,20 +85,9 @@ public class MainView extends VerticalLayout {
         grid.addItemClickListener(event -> mostrarAvistamiento(event.getItem(), idField,
                 idGatoField, idUserField, idFotoField, fechaField));
 
-        Button btnCrear = new Button("Crear", e -> {
-            if (!formularioValido(idGatoField, idUserField, idFotoField, fechaField)) {
-                Notification.show("Completa todos los campos con valores válidos.");
-                return;
-            }
-
-            Avistamiento avistamiento = new Avistamiento(idGatoField.getValue(), idUserField.getValue(),
-                    idFotoField.getValue(), fechaField.getValue());
-            avistamiento.setIdAvistamiento(siguienteId[0]++);
-            avistamientos.add(avistamiento);
-            grid.getDataProvider().refreshAll();
-            Notification.show("Avistamiento creado.");
-            limpiarAvistamiento(idField, idGatoField, idUserField, idFotoField, fechaField);
-        });
+        Button btnCrear = new Button("Crear", e ->
+                Notification.show("Los avistamientos no permiten ingresar ni guardar datos."));
+        btnCrear.setEnabled(false);
         btnCrear.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 
         Button btnConsultar = new Button("Consultar", e -> {
@@ -107,38 +99,13 @@ public class MainView extends VerticalLayout {
             }
         });
 
-        Button btnActualizar = new Button("Actualizar", e -> {
-            Optional<Avistamiento> encontrado = buscarAvistamiento(idField, avistamientos);
-            if (encontrado.isEmpty()) {
-                Notification.show("Selecciona o consulta un avistamiento existente.");
-                return;
-            }
-            if (!formularioValido(idGatoField, idUserField, idFotoField, fechaField)) {
-                Notification.show("Completa todos los campos con valores válidos.");
-                return;
-            }
+        Button btnActualizar = new Button("Actualizar", e ->
+                Notification.show("Los avistamientos no permiten ingresar ni guardar datos."));
+        btnActualizar.setEnabled(false);
 
-            Avistamiento avistamiento = encontrado.get();
-            avistamiento.setIdGato(idGatoField.getValue());
-            avistamiento.setIdUser(idUserField.getValue());
-            avistamiento.setIdFoto(idFotoField.getValue());
-            avistamiento.setFecha(fechaField.getValue());
-            grid.getDataProvider().refreshAll();
-            Notification.show("Avistamiento actualizado.");
-            limpiarAvistamiento(idField, idGatoField, idUserField, idFotoField, fechaField);
-        });
-
-        Button btnEliminar = new Button("Eliminar", e -> {
-            Optional<Avistamiento> encontrado = buscarAvistamiento(idField, avistamientos);
-            if (encontrado.isPresent()) {
-                avistamientos.remove(encontrado.get());
-                grid.getDataProvider().refreshAll();
-                Notification.show("Avistamiento eliminado.");
-                limpiarAvistamiento(idField, idGatoField, idUserField, idFotoField, fechaField);
-            } else {
-                Notification.show("No existe un avistamiento con ese ID.");
-            }
-        });
+        Button btnEliminar = new Button("Eliminar", e ->
+                Notification.show("Los avistamientos no permiten ingresar ni guardar datos."));
+        btnEliminar.setEnabled(false);
         btnEliminar.addThemeVariants(ButtonVariant.LUMO_ERROR);
 
         Button btnLimpiar = new Button("Limpiar",
