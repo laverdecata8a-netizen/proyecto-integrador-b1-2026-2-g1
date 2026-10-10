@@ -52,12 +52,13 @@ public class MainView extends VerticalLayout {
 
     }
 
+ 
     // Método privado para gestionar la primera entidad
     private Component crearSeccionGato() {
         VerticalLayout layout = new VerticalLayout();
         layout.setPadding(false);
 
-        TextField idField = new TextField("ID");
+        TextField idField = new TextField("ID Gato");
         idField.setReadOnly(true);
 
         TextField nombreField = new TextField("Nombre");
@@ -224,6 +225,42 @@ public class MainView extends VerticalLayout {
 
         layout.add(form, acciones, grid);
         return layout;
+    }
+
+     // Método privado para gestionar los avistamientos
+    private Component crearSeccionAvistamientos() {
+        VerticalLayout layout = new VerticalLayout();
+        layout.setPadding(false);
+
+        TextField idField = new TextField("ID Avistamiento");
+        idField.setReadOnly(true);
+
+        TextField gatoField = new TextField("ID Gato");
+        TextField userField = new TextField("ID User");
+        TextField fotoField = new TextField("ID Foto");
+        DatePicker fechaField = new DatePicker("Fecha de ingreso");
+
+        FormLayout form = new FormLayout(idField,gatoField,userField,fotoField,fechaField );
+
+        Button btnCrear = new Button("Crear", e -> 
+            Notification.show("Avistamiento - Crear: " + idField.getValue())
+        );
+        btnCrear.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+
+        Button btnConsultar = new Button("Consultar", e -> 
+            Notification.show("Avistamiento - Consultar ID: " + idField.getValue())
+        );
+
+        Button btnActualizar = new Button("Actualizar", e -> 
+            Notification.show("Avistamiento - Actualizar ID: " + idField.getValue())
+        );
+
+        Button btnEliminar = new Button("Eliminar", e -> 
+            Notification.show("Avistamiento - Eliminar ID: " + idField.getValue())
+        );
+        btnEliminar.addThemeVariants(ButtonVariant.LUMO_ERROR);
+
+       
     }
 
     //Fotos
