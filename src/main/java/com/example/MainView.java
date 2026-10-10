@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import com.example.model.Avistamiento;
 import com.example.model.Foto;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
@@ -43,13 +42,10 @@ public class MainView extends VerticalLayout {
         tabSheet.add("Gatos", crearSeccionGato());
         tabSheet.add("Ubicacion", crearSeccionUbicacion());
         tabSheet.add("User", crearSeccionUser());
-        tabSheet.add("Avistamientos", crearSeccionAvistamiento());
+        tabSheet.add("Avistamientos", crearSeccionAvistamientos());
         tabSheet.add("Foto", crearSeccionFoto());
         add(titulo, tabSheet);
         
-    }
-
-
     }
 
  
@@ -173,7 +169,7 @@ public class MainView extends VerticalLayout {
         VerticalLayout layout = new VerticalLayout();
         layout.setPadding(false);
 
-        TextField idField = new TextField("ID");
+        TextField idField = new TextField("ID User");
         idField.setReadOnly(true);
 
         TextField nombreField = new TextField("Nombre");
@@ -424,6 +420,7 @@ public class MainView extends VerticalLayout {
         esPrincipalCheckbox.setValue(false);
         descripcionField.clear();
     }
+}
 
 
 
