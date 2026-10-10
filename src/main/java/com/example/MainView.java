@@ -260,7 +260,20 @@ public class MainView extends VerticalLayout {
         );
         btnEliminar.addThemeVariants(ButtonVariant.LUMO_ERROR);
 
-       
+        Button btnLimpiar = new Button("Limpiar", e -> {
+            idField.clear();
+            gatoField.clear();
+            userField.clear();
+            fotoField.clear();
+            fechaField.clear();
+        });
+
+        HorizontalLayout acciones = new HorizontalLayout(
+            btnCrear, btnConsultar, btnActualizar, btnEliminar, btnLimpiar
+        );
+        acciones.getStyle().set("flex-wrap", "wrap");
+
+        
     }
 
     //Fotos
@@ -402,6 +415,6 @@ public class MainView extends VerticalLayout {
         esPrincipalCheckbox.setValue(false);
         descripcionField.clear();
     }
-}
+
 
 
