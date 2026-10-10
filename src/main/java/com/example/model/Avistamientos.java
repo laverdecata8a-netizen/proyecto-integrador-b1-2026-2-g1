@@ -2,7 +2,7 @@ package com.example.model;
 
 import java.time.LocalDate;
 
-public class Avistamiento {
+public class Avistamientos {
 
     private int idAvistamiento;
     private int idGato;
@@ -10,14 +10,14 @@ public class Avistamiento {
     private int idFoto;
     private LocalDate fecha;
 
-    public Avistamiento() {
+    public Avistamientos() {
     }
 
-    public Avistamiento(int idGato, int idUser, int idFoto, LocalDate fecha) {
+    public Avistamientos(int idGato, int idUser, int idFoto, LocalDate fecha) {
         this(0, idGato, idUser, idFoto, fecha);
     }
 
-    public Avistamiento(int idAvistamiento, int idGato, int idUser, int idFoto, LocalDate fecha) {
+    public Avistamientos(int idAvistamiento, int idGato, int idUser, int idFoto, LocalDate fecha) {
         this.idAvistamiento = idAvistamiento;
         this.idGato = idGato;
         this.idUser = idUser;
