@@ -273,6 +273,15 @@ public class MainView extends VerticalLayout {
         );
         acciones.getStyle().set("flex-wrap", "wrap");
 
+        Grid<String[]> grid = new Grid<>();
+        grid.addColumn(row -> row[0]).setHeader("ID").setAutoWidth(true);
+        grid.addColumn(row -> row[1]).setHeader("ID Gato").setAutoWidth(true);
+        grid.addColumn(row -> row[2]).setHeader("ID User").setAutoWidth(true);
+        grid.addColumn(row -> row[3]).setHeader("ID Foto").setAutoWidth(true);
+        grid.addColumn(row -> row[4]).setHeader("Fecha de ingreso").setAutoWidth(true); 
+
+        layout.add(form, acciones, grid);
+        return layout;
         
     }
 
