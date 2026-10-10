@@ -39,7 +39,7 @@ Diagrama de alto nivel:
 
 El modelo de datos del proyecto se organiza alrededor de cinco entidades principales.
 
-![Diagrama MER de GatoGo](GenerateMerDiagram.jpg)
+![Diagrama MER de GatoGo](docs/mer-gatogo.png)
 
 ### Relación principal
 
